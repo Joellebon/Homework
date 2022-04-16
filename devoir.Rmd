@@ -1,0 +1,164 @@
+---
+output: pdf_document
+---
+---
+title: "homework presentation"
+author: "AMEZOUWUI koffi"
+date: "15 June,2020"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# EXERCISE 1
+## Variation in response explain 
+```{r}
+library(faraway)
+data(teengamb)
+head(teengamb)
+model1=lm(gamble~sex+status+income+verbal,data = teengamb)
+model1
+summary(model1)
+```
+we have 52.67 percent of variation in response is explain by these predictors
+
+```{r}
+largest=model1$residuals
+max(largest)
+```
+The largest (positive )residuals observation is 94.25222
+### the case number
+```{r}
+match(max(largest),largest)
+```
+The case number is 24.
+
+###c)the mean and median residuals
+```{r}
+moyenne=model1$residuals
+mean(moyenne)
+mediane=model1$residuals
+median(mediane)
+```
+The mean of the residuals is -3.065293e-17 and the median is -1.451392
+###d)correlation of residuals of fitted values
+```{r}
+cor(model1$residuals,model1$fitted.values)
+```
+The corelation of residuals and fitted values is -1.070659e-16
+
+### EXERCISE 4
+```{r}
+data(prostate)
+head(prostate)
+summary(prostate)
+model2=lm(lpsa~lcavol,data=prostate )
+model2
+x1=summary(model2)
+x1
+a1=x1$r.squared
+a1
+b1=x1$sigma
+b1
+model3=lm(lpsa~lcavol+lweight,data = prostate)
+model3
+x2=summary(model3)
+a2=x2$r.squared
+a2
+b2=x2$sigma
+b2
+model4=lm(lpsa~lcavol+lweight+svi,data = prostate)
+model4
+x3=summary(model4)
+a3=x3$r.squared
+a3
+b3=x3$sigma
+b3
+model5=lm(lpsa~lcavol+lweight+svi+lbph,data = prostate)
+model5
+x4=summary(model5)
+a4=x4$r.squared
+a4
+b4=x4$sigma
+b4
+model6=lm(lpsa~lcavol+lweight+svi+lbph+age,data = prostate)
+model6
+x5=summary(model6)
+a5=x5$r.squared
+a5
+b5=x5$sigma
+b5
+model7=lm(lpsa~lcavol+lweight+svi+lbph+age+lcp,data = prostate)
+x6=summary(model7)
+a6=x6$r.squared
+a6
+b6=x6$sigma
+b6
+model8=lm(lpsa~lcavol+lweight+svi+lbph+age+lcp+pgg45,data = prostate)
+model8
+x7=summary(model8)
+a7=x7$r.squared
+a7
+b7=x7$sigma
+b7
+model9=lm(lpsa~lcavol+lweight+svi+lbph+age+lcp+pgg45+gleason,data = prostate)
+model9
+x8=summary(model9)
+a8=x8$r.squared
+a8
+b8=x8$sigma
+b8
+```
+I  Fit a model with lpsa as the response and l cavol as the predictor recording the residual standard error and the R2 
+##creation du vecteur
+```{r}
+SIGMA=c(b1,b2,b3,b4,b5,b6,b7,b8)
+RSQRT=c(a1,a2,a3,a4,a5,a6,a7,a8)
+plotrange=c(1,2,3,4,5,6,7,8)
+plot(plotrange,RSQRT,xlab ="Number of explanatory variables",ylab = "Residuals standard error" )
+plot(plotrange,SIGMA,xlab ="Number of explanatory variables",ylab = "R squared" )
+
+```
+It is the trend of the two statistics
+
+##EXERCISE 5
+##Hints:  if x=ay+b,then y=(1/a)x-(b/a)   abline (y-intercept, slope )
+##Nuage de points de lpsa et lcavol
+```{r}
+data(prostate)
+attach(prostate)
+plot(lpsa~lcavol,xlab="lcavol",ylab = "lpsa")
+```
+##The regressions
+##If X=lcavol,y=lpsa
+```{r}
+fit1=lm(lpsa~lcavol,data = prostate)
+fit2=lm(lcavol~lpsa,data = prostate)
+plot(lcavol,lpsa)
+abline(fit1$coeff[1],fit1$coeff[2],col="red")
+abline(-fit2$coeff[1]/fit2$coeff[2],1/fit2$coeff[2],col="blue")
+```
+##therefore the two regression lines intersect at the point of averages
+```{r}
+mean(lcavol)
+mean(lpsa)
+```
+##If x=lpsa,y=lcavol
+```{r}
+fit2=lm(lcavol~lpsa)
+fit1=lm(lpsa~lcavol)
+plot(lpsa,lcavol)
+abline(fit2$coeff[1],fit2$coeff[2],col="red")
+abline(-fit1$coeff[1]/fit1$coeff[2],1/fit1$coeff[2],col="blue")
+
+```
+             THE END 
+
+
+
+
+
+
+
+
